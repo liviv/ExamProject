@@ -1,0 +1,19 @@
+https://www.royalcaribbean.com/
+Passwdlm29
+
+TC1 Successful log in to the account
+1 Go to https://www.royalcaribbean.com/
+2.Click on Sign in button
+3. in "Email address or username", insert email "viktorialvov@gmail.com"
+4. In password field, insert password Passwdlm29
+5. Click on sign In  button
+EXPECTED RESULT: user is signed in, My account page is opened
+
+
+TC2
+Find a cruise for 6 - 8 nights
+1. go to home page
+2. Click on Find a cruise
+3.click on 6-8 nights button
+
+EXPECTED RESULT: Ony cruises for 6,7 or 8 nights are shown
