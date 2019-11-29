@@ -10,7 +10,13 @@ public class HomePage extends AbstractPage {
         super(webDriver);
     }
 
-    @FindBy(xpath="//nav/div/a[@href='https://www.royalcaribbean.com/cruises']")
-    private WebElement findACruise;
+    @FindBy(xpath = "//nav/div/a[@href='https://www.royalcaribbean.com/cruises']")
+    private WebElement findACruiseMenu;
+
+    @FindBy(xpath = "//ul/li[@class='collapsable']")
+    private WebElement cruiseElement;
+
+    @FindBy(xpath = "//h4")
+    private WebElement nightLabelOnCruise;
 
 }
