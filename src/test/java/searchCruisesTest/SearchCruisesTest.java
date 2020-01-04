@@ -3,10 +3,6 @@ package searchCruisesTest;
 import abstractTest.AbstractTest;
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import org.openqa.selenium.support.ui.Sleeper;
-import pages.CruiseItem;
-
-import java.time.Duration;
 
 public class SearchCruisesTest extends AbstractTest {
 
@@ -25,11 +21,26 @@ public class SearchCruisesTest extends AbstractTest {
     }
 
     @Test
-    public void checkDefaultSorting(){
+    public void checkDefaultSorting() {
         Logger logger = Logger.getLogger(getClass());
         homePage.openPage();
         homePage.clickOnFindACruise();
         cruisesPage.clickOn6_8NightsFilter();
         cruisesPage.checkSortingByPriceOnAllPages();
-   }
+    }
+
+    @Test
+    public void checkDeparturePort() {
+        Logger logger = Logger.getLogger(getClass());
+        homePage.openPage();
+        homePage.clickOnFindACruise();
+        cruisesPage.waitPageLoaded();
+        cruisesPage.clickOnDeparturePortButton();
+        cruisesPage.waitPageLoaded();
+        cruisesPage.getDeparturePortComponent().
+                clickOnContinentByName("ITALY");
+        cruisesPage.getDeparturePortComponent().clickOnCityByName("Venice");
+        cruisesPage.getDeparturePortComponent().clickOnApplyButton();
+    }
+
 }
