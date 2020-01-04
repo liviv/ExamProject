@@ -1,6 +1,7 @@
 package pages;
 
 import abstractPage.AbstractPage;
+import components.DeparturePortComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,9 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class CruisesPage extends AbstractPage {
@@ -30,7 +29,6 @@ public class CruisesPage extends AbstractPage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         WebDriverWait wait = new WebDriverWait(webDriver, 15);
         wait.until(ExpectedConditions.and(
                 ExpectedConditions.visibilityOfAllElements(filterBy6_8Nights),
@@ -46,6 +44,7 @@ public class CruisesPage extends AbstractPage {
             e.printStackTrace();
         }
     }
+
 
     public void clickOnNightsFilter(String numberOfNight) {
         try {
@@ -74,6 +73,12 @@ public class CruisesPage extends AbstractPage {
     public void clickOnNextPageButton() {
         logger.info("Clicking next page button");
         nextPageButton.click();
+        waitPageLoaded();
+    }
+
+    public void clickOnDeparturePortButton() {
+        logger.info("Clicking Departure Port button");
+        departurePortButton.click();
         waitPageLoaded();
     }
 
@@ -137,6 +142,16 @@ public class CruisesPage extends AbstractPage {
 
     @FindBy(xpath = "//button[@data-selector='search-next-page']")
     protected WebElement nextPageButton;
+
+    @FindBy(xpath = "//button[@data-selector ='search-any-departure-port']")
+    protected WebElement departurePortButton;
+
+    @FindBy(xpath = "//section[@class='basic-filter-dropdown active']")
+    protected DeparturePortComponent departurePortComponent;
+
+    public DeparturePortComponent getDeparturePortComponent() {
+        return departurePortComponent;
+    }
 
     public List<CruiseItem> getCruiseItemList() {
         return cruiseItemList;
