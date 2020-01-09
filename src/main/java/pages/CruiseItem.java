@@ -37,6 +37,11 @@ public class CruiseItem extends HtmlElement {
         return numberOfNights;
     }
 
+    public String getDeparturePort() {
+        String departurePortStr = departurePort.getText().trim();
+        return departurePortStr.substring(0, departurePortStr.length() - 1);
+    }
+
     @FindBy(xpath = ".//h4")
     protected WebElement nightLabelOnCruise;
 
@@ -46,4 +51,6 @@ public class CruiseItem extends HtmlElement {
     @FindBy(xpath = ".//span[@class='price-value']")
     protected WebElement price;
 
+    @FindBy(xpath = ".//p[@class='itinerary-description']/span/b[1]")
+    protected WebElement departurePort;
 }

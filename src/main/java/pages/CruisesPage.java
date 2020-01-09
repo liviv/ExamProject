@@ -61,6 +61,7 @@ public class CruisesPage extends AbstractPage {
             actionsOnElements.clickOnElement(filterBy6_8Nights);
             System.out.println("Filter by 6_8 Nights was selected");
             waitPageLoaded();
+            initialize();
         } catch (Exception e) {
             logger.error("Cannot click on element");
         }
@@ -84,17 +85,30 @@ public class CruisesPage extends AbstractPage {
 
     public boolean checkCruiseItemsOnAllPages(Predicate<CruiseItem> predicate, String predicateCriteriaDescription) {
         logger.info("Checking that cruise items on all pages match the following criteria: " + predicateCriteriaDescription);
+
+        int maxPage = 1000;
+        int currentPage = 1;
+
         while (true) {
+
+            if (currentPage > maxPage) {
+                stopTestAndThrowError("The number of pages exceeds 1000");
+            }
+
             if (!this.getCruiseItemList().stream().allMatch(it -> {
-                boolean itemIsCorrect = predicate.test(it);
-                logger.info("Cruise " + it.getCruiseName() + " is correct: " + itemIsCorrect);
-                return itemIsCorrect;
-            })) {
+                        boolean itemIsCorrect = predicate.test(it);
+                        logger.info("Cruise " + it.getCruiseName() + " is correct: " + itemIsCorrect);
+                        return itemIsCorrect;
+                    }
+            )
+                    ) {
                 logger.info("Some cruise items on the page do not match the following criteria: " + predicateCriteriaDescription);
                 return false;
             }
             if (isNextPageButtonEnabled()) {
                 clickOnNextPageButton();
+                currentPage++;
+
                 continue;
             }
             logger.info("Cruise items on all pages match the following criteria: " + predicateCriteriaDescription);
@@ -127,6 +141,24 @@ public class CruisesPage extends AbstractPage {
         }
     }
 
+    public int getNumberOfItems() {
+        String paginationLabel = this.paginationLabel.getText().trim();
+        int value = Integer.valueOf(paginationLabel.substring(paginationLabel.indexOf("of ") + 3));
+        logger.info("Number of items is: " + value);
+        return value;
+    }
+
+    public void clickOnClearAllButton(){
+        try{
+            logger.info("Clicking on Clear All button" );
+            clearAllButton.click();
+            waitPageLoaded();
+            initialize();
+        }catch(Exception e){
+            logger.info("Clear All  button coud not be found");
+        }
+    }
+
 
     @FindBy(xpath = "//ul/li[@class='collapsable']")
     protected List<CruiseItem> cruiseItemList;
@@ -136,6 +168,9 @@ public class CruisesPage extends AbstractPage {
 
     @FindBy(xpath = "//div[@class='mat-paginator-range-label']")
     protected WebElement paginationLabel;
+
+    @FindBy(xpath = "//button[@data-selector='search-clear-all-button']")
+    protected WebElement clearAllButton;
 
     @FindBy(xpath = "//button[@data-selector='search-previous-page']")
     protected WebElement previousPageButton;

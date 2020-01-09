@@ -1,5 +1,8 @@
 package utils;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -17,5 +20,10 @@ public class Utils {
         }
 
         return true;
+    }
+
+
+    public static WebDriver getWebDriver() {
+        return new ChromeDriver();
     }
 }

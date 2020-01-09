@@ -33,5 +33,11 @@ public class AbstractPage {
 
     public void scrollToElement(WebElement element) {
         ((JavascriptExecutor)webDriver).executeScript("arguments[0].scrollIntoView();", element);
+
+    }
+
+    public void stopTestAndThrowError(String message){
+        logger.error(message);
+        throw new RuntimeException(message);
     }
 }
