@@ -64,15 +64,15 @@ public class SearchCruisesTest extends AbstractTest {
         cruisesPage.getDeparturePortComponent().
                 clickOnContinentByName("ITALY");
         cruisesPage.waitPageLoaded();
-        cruisesPage.getDeparturePortComponent().clickOnCityByName("Venice");
-        //cruisesPage.initialize();
+        cruisesPage.getDeparturePortComponent().clickOnCityByName("Rome");
+        cruisesPage.initialize();
         cruisesPage.getDeparturePortComponent().clickOnApplyButton();
         cruisesPage.waitPageLoaded();
         cruisesPage.initialize();
         Assert.assertTrue(
                 cruisesPage.checkCruiseItemsOnAllPages(it -> {
-                    return it.getDeparturePort().toLowerCase().contains("venice");
-                }, "Departure port is Venice"));
+                    return it.getDeparturePort().toLowerCase().contains("rome");
+                }, "Departure port is Rome"));
     }
 
     @Test
@@ -81,8 +81,10 @@ public class SearchCruisesTest extends AbstractTest {
         homePage.openPage();
         homePage.clickOnFindACruise();
         cruisesPage.waitPageLoaded();
-        int initialNumberOfCruises = cruisesPage.getNumberOfItems();
 
+        int initialNumberOfCruises = cruisesPage.getNumberOfItems();
+        //  cruisesPage.getDeparturePortComponent().waitDepartureComponentLoaded();
+        cruisesPage.clickOnDeparturePortButton();
         cruisesPage.getDeparturePortComponent().
                 clickOnContinentByName("ITALY");
         cruisesPage.waitPageLoaded();

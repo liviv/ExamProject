@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Utils {
+    private static WebDriver webdriver  = new ChromeDriver();
 
     private static <T, R extends Comparable<? super R>> boolean isSorted(List<T> list, Function<T, R> function) {
         Comparator<T> comp = Comparator.comparing(function);
@@ -24,6 +25,6 @@ public class Utils {
 
 
     public static WebDriver getWebDriver() {
-        return new ChromeDriver();
+        return webdriver;
     }
 }
