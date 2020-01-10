@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pages.CruiseItem;
 import pages.CruisesPage;
 import pages.HomePage;
+import utils.Utils;
 
 import java.io.File;
 import java.util.List;
@@ -28,7 +29,7 @@ public class AbstractTest {
 
 
         Logger logger = Logger.getLogger(getClass());
-        webDriver = new ChromeDriver();
+        webDriver = Utils.getWebDriver();
         homePage = new HomePage(webDriver);
         cruisesPage = new CruisesPage(webDriver);
 
