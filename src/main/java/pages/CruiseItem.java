@@ -3,6 +3,7 @@ package pages;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import ru.yandex.qatools.htmlelements.element.Button;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
 import java.text.NumberFormat;
@@ -14,14 +15,14 @@ public class CruiseItem extends HtmlElement {
 
     public String getCruiseName() {
         String value = cruiseName.getText().trim();
-        //logger.info("Cruise name  is: " + value);
+        logger.info("Cruise name  on cruise item is: " + value);
         return value;
     }
 
     public String getPriceLabelStr() {
         String value = price.getText().trim().replace(",", "");
 
-       // logger.info("Price is: " + value);
+        // logger.info("Price is: " + value);
         return value;
     }
 
@@ -31,7 +32,7 @@ public class CruiseItem extends HtmlElement {
 
     public String getNightLabelOnCruiseStr() {
         String value = nightLabelOnCruise.getText().trim();
-        logger.info("Number of nights label is: " + value);
+        // logger.info("Number of nights label is: " + value);
         return value;
     }
 
@@ -43,11 +44,17 @@ public class CruiseItem extends HtmlElement {
 
     public String getDeparturePort() {
         String departurePortStr = departurePort.getText().trim();
-        return departurePortStr.substring(0, departurePortStr.length() - 1);
+        String departurePort= departurePortStr.substring(0, departurePortStr.length() - 1);
+        logger.info("departure port on cruise iem is: "+ departurePort);
+        return departurePort;
+    }
+
+    public void clickOnNightLabel() {
+        nightLabelOnCruise.click();
     }
 
     @FindBy(xpath = ".//h4")
-    protected WebElement nightLabelOnCruise;
+    protected Button nightLabelOnCruise;
 
     @FindBy(xpath = ".//h3")
     protected WebElement cruiseName;
