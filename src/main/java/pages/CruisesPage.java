@@ -2,6 +2,7 @@ package pages;
 
 import abstractPage.AbstractPage;
 import components.DeparturePortComponent;
+import components.ItineraryPanelComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,10 +19,6 @@ public class CruisesPage extends AbstractPage {
         super(webDriver);
     }
 
-    public final String NIGHTS_2_5 = "2to5";
-    public final String NIGHTS_6_8 = "6to8";
-    public final String NIGHTS_9_11 = "9to11";
-    public final String NIGHTS_12_MORE = "12plus";
 
     public void waitPageLoaded() {
         try {
@@ -101,7 +98,7 @@ public class CruisesPage extends AbstractPage {
                         return itemIsCorrect;
                     }
             )
-                    ) {
+            ) {
                 logger.info("Some cruise items on the page do not match the following criteria: " + predicateCriteriaDescription);
                 return false;
             }
@@ -148,17 +145,29 @@ public class CruisesPage extends AbstractPage {
         return value;
     }
 
-    public void clickOnClearAllButton(){
-        try{
-            logger.info("Clicking on Clear All button" );
+    public void clickOnClearAllButton() {
+        try {
+            logger.info("Clicking on Clear All button");
             clearAllButton.click();
             waitPageLoaded();
             initialize();
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.info("Clear All  button coud not be found");
         }
     }
 
+    public void clickOnCruise(int index) {
+        if (index < cruiseItemList.size()) {
+            cruiseItemList.get(index).click();
+            logger.info("Clicking on " + cruiseItemList.get(index).getName());
+        } else {
+            stopTestAndThrowError("Index must be between 0 and " + (cruiseItemList.size() - 1));
+        }
+    }
+
+    public ItineraryPanelComponent getItineraryPanelComponent() {
+        return itineraryPanelComponent;
+    }
 
     @FindBy(xpath = "//ul/li[@class='collapsable']")
     protected List<CruiseItem> cruiseItemList;
@@ -183,6 +192,11 @@ public class CruisesPage extends AbstractPage {
 
     @FindBy(xpath = "//section[@class='basic-filter-dropdown active']")
     protected DeparturePortComponent departurePortComponent;
+
+
+    @FindBy(xpath = "//md-sidenav[contains(@class,'itinerary-panel-sidenav')]")
+    protected ItineraryPanelComponent itineraryPanelComponent;
+
 
     public DeparturePortComponent getDeparturePortComponent() {
         return departurePortComponent;

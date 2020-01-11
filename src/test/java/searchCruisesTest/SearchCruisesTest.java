@@ -16,8 +16,6 @@ public class SearchCruisesTest extends AbstractTest {
             return t.getNumberOfNights() >= 6;
         }
     };
-
-
     public static Predicate<CruiseItem> lessOrEqual8Nights = new Predicate<CruiseItem>() {
         @Override
         public boolean test(CruiseItem t) {
@@ -106,5 +104,25 @@ public class SearchCruisesTest extends AbstractTest {
 
     }
 
+    @Test
+    public void checkItineraryPanel() {
+        Logger logger = Logger.getLogger(getClass());
+        homePage.openPage();
+        homePage.clickOnFindACruise();
+        cruisesPage.waitPageLoaded();
+        cruisesPage.getCruiseItemList().get(0).clickOnNightLabel();
+        cruisesPage.getItineraryPanelComponent().waitComponentLoaded();
+        Assert.assertTrue("Cruise name on cruise item and itinerary panel is not equal ",
+                cruisesPage.getCruiseItemList().get(0).getCruiseName().trim()
+                        .equalsIgnoreCase(
+                                cruisesPage.getItineraryPanelComponent().getCruiseNameItineraryPanel()));
+        Assert.assertEquals("Number of nights on cruise item and itinerary panel is not equal",
+                cruisesPage.getCruiseItemList().get(0).getNumberOfNights(),
+                cruisesPage.getItineraryPanelComponent().getNumberOfNightsItineraryPanel());
+        Assert.assertTrue("Departure port on cruise item and itinerary panel is not equal ",
+                cruisesPage.getCruiseItemList().get(0).getDeparturePort().
+                        equalsIgnoreCase(
+                                cruisesPage.getItineraryPanelComponent().getDeparturePortItineraryPanel()));
+    }
 
 }
