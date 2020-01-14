@@ -11,6 +11,19 @@ import java.util.Locale;
 
 public class CruiseItem extends HtmlElement {
 
+    @FindBy(xpath = ".//h4")
+    protected Button nightLabelOnCruise;
+
+    @FindBy(xpath = ".//h3")
+    protected WebElement cruiseName;
+
+    @FindBy(xpath = ".//span[@class='price-value']")
+    protected WebElement price;
+
+    @FindBy(xpath = ".//p[@class='itinerary-description']/span/b[1]")
+    protected WebElement departurePort;
+
+
     Logger logger = Logger.getLogger(getClass());
 
     public String getCruiseName() {
@@ -53,15 +66,6 @@ public class CruiseItem extends HtmlElement {
         nightLabelOnCruise.click();
     }
 
-    @FindBy(xpath = ".//h4")
-    protected Button nightLabelOnCruise;
 
-    @FindBy(xpath = ".//h3")
-    protected WebElement cruiseName;
 
-    @FindBy(xpath = ".//span[@class='price-value']")
-    protected WebElement price;
-
-    @FindBy(xpath = ".//p[@class='itinerary-description']/span/b[1]")
-    protected WebElement departurePort;
 }
