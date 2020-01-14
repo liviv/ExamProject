@@ -15,10 +15,37 @@ import java.util.function.Predicate;
 
 public class CruisesPage extends AbstractPage {
 
+    @FindBy(xpath = "//ul/li[@class='collapsable']")
+    protected List<CruiseItem> cruiseItemList;
+
+    @FindBy(xpath = "//label[@for= 'filter_6to8_nights-input']")
+    protected WebElement filterBy6_8Nights;
+
+    @FindBy(xpath = "//div[@class='mat-paginator-range-label']")
+    protected WebElement paginationLabel;
+
+    @FindBy(xpath = "//button[@data-selector='search-clear-all-button']")
+    protected WebElement clearAllButton;
+
+    @FindBy(xpath = "//button[@data-selector='search-previous-page']")
+    protected WebElement previousPageButton;
+
+    @FindBy(xpath = "//button[@data-selector='search-next-page']")
+    protected WebElement nextPageButton;
+
+    @FindBy(xpath = "//button[@data-selector ='search-any-departure-port']")
+    protected WebElement departurePortButton;
+
+    @FindBy(xpath = "//section[@class='basic-filter-dropdown active']")
+    protected DeparturePortComponent departurePortComponent;
+
+    @FindBy(xpath = "//md-sidenav[contains(@class,'itinerary-panel-sidenav')]")
+    protected ItineraryPanelComponent itineraryPanelComponent;
+
+
     public CruisesPage(WebDriver webDriver) {
         super(webDriver);
     }
-
 
     public void waitPageLoaded() {
         try {
@@ -42,6 +69,32 @@ public class CruisesPage extends AbstractPage {
         }
     }
 
+    public boolean cruiseNameCorrespondsToItineraryPanel(int index) {
+        if (getCruiseItemList().get(index).getCruiseName().trim().equalsIgnoreCase(
+                getItineraryPanelComponent().getCruiseNameItineraryPanel())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean nbOfNightsOnCruiseCorrespondsToItineraryPanel(int index) {
+        if (getCruiseItemList().get(index).getNumberOfNights() == getItineraryPanelComponent().getNumberOfNightsItineraryPanel()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean departurePortOnCruiseCorrespondsToItineraryPanel(int index) {
+        if (getCruiseItemList().get(index).getDeparturePort().
+                equalsIgnoreCase(
+                        getItineraryPanelComponent().getDeparturePortItineraryPanel())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void clickOnNightsFilter(String numberOfNight) {
         try {
@@ -169,33 +222,6 @@ public class CruisesPage extends AbstractPage {
         return itineraryPanelComponent;
     }
 
-    @FindBy(xpath = "//ul/li[@class='collapsable']")
-    protected List<CruiseItem> cruiseItemList;
-
-    @FindBy(xpath = "//label[@for= 'filter_6to8_nights-input']")
-    protected WebElement filterBy6_8Nights;
-
-    @FindBy(xpath = "//div[@class='mat-paginator-range-label']")
-    protected WebElement paginationLabel;
-
-    @FindBy(xpath = "//button[@data-selector='search-clear-all-button']")
-    protected WebElement clearAllButton;
-
-    @FindBy(xpath = "//button[@data-selector='search-previous-page']")
-    protected WebElement previousPageButton;
-
-    @FindBy(xpath = "//button[@data-selector='search-next-page']")
-    protected WebElement nextPageButton;
-
-    @FindBy(xpath = "//button[@data-selector ='search-any-departure-port']")
-    protected WebElement departurePortButton;
-
-    @FindBy(xpath = "//section[@class='basic-filter-dropdown active']")
-    protected DeparturePortComponent departurePortComponent;
-
-
-    @FindBy(xpath = "//md-sidenav[contains(@class,'itinerary-panel-sidenav')]")
-    protected ItineraryPanelComponent itineraryPanelComponent;
 
 
     public DeparturePortComponent getDeparturePortComponent() {

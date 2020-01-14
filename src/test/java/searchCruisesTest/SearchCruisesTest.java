@@ -25,16 +25,12 @@ public class SearchCruisesTest extends AbstractTest {
 
     @Test
     public void searchCruisesByNumberOfNights() {
-        Logger logger = Logger.getLogger(getClass());
         homePage.openPage();
         homePage.clickOnFindACruise();
 
         cruisesPage.clickOn6_8NightsFilter();
 
-        System.out.println("cruisesPage.getCruiseItemList() + " + cruisesPage.getCruiseItemList());
-        Assert.assertTrue(cruisesPage.checkCruiseItemsOnAllPages(it -> {
-            return it.getNumberOfNights() >= 6 && it.getNumberOfNights() <= 8;
-        }, "Cruise number of nights are between 6 and 8"));
+        //System.out.println("cruisesPage.getCruiseItemList() + " + cruisesPage.getCruiseItemList());
 
         Assert.assertTrue(cruisesPage.checkCruiseItemsOnAllPages(
                 moreOrEqual6Nights.and(lessOrEqual8Nights)
@@ -43,7 +39,6 @@ public class SearchCruisesTest extends AbstractTest {
 
     @Test
     public void checkDefaultSorting() {
-        Logger logger = Logger.getLogger(getClass());
         homePage.openPage();
         homePage.clickOnFindACruise();
         cruisesPage.clickOn6_8NightsFilter();
@@ -53,7 +48,6 @@ public class SearchCruisesTest extends AbstractTest {
 
     @Test
     public void checkDeparturePort() {
-        Logger logger = Logger.getLogger(getClass());
         homePage.openPage();
         homePage.clickOnFindACruise();
         cruisesPage.waitPageLoaded();
@@ -75,7 +69,6 @@ public class SearchCruisesTest extends AbstractTest {
 
     @Test
     public void checkClearAllButton() {
-        Logger logger = Logger.getLogger(getClass());
         homePage.openPage();
         homePage.clickOnFindACruise();
         cruisesPage.waitPageLoaded();
@@ -106,23 +99,19 @@ public class SearchCruisesTest extends AbstractTest {
 
     @Test
     public void checkItineraryPanel() {
-        Logger logger = Logger.getLogger(getClass());
         homePage.openPage();
         homePage.clickOnFindACruise();
         cruisesPage.waitPageLoaded();
-        cruisesPage.getCruiseItemList().get(0).clickOnNightLabel();
+        cruisesPage.getCruiseItemList().get(1).clickOnNightLabel();
         cruisesPage.getItineraryPanelComponent().waitComponentLoaded();
+
         Assert.assertTrue("Cruise name on cruise item and itinerary panel is not equal ",
-                cruisesPage.getCruiseItemList().get(0).getCruiseName().trim()
-                        .equalsIgnoreCase(
-                                cruisesPage.getItineraryPanelComponent().getCruiseNameItineraryPanel()));
-        Assert.assertEquals("Number of nights on cruise item and itinerary panel is not equal",
-                cruisesPage.getCruiseItemList().get(0).getNumberOfNights(),
-                cruisesPage.getItineraryPanelComponent().getNumberOfNightsItineraryPanel());
+                cruisesPage.cruiseNameCorrespondsToItineraryPanel(1));
+        Assert.assertTrue("Number of nights on cruise item and itinerary panel is not equal",
+                cruisesPage.nbOfNightsOnCruiseCorrespondsToItineraryPanel(1));
         Assert.assertTrue("Departure port on cruise item and itinerary panel is not equal ",
-                cruisesPage.getCruiseItemList().get(0).getDeparturePort().
-                        equalsIgnoreCase(
-                                cruisesPage.getItineraryPanelComponent().getDeparturePortItineraryPanel()));
+                cruisesPage.departurePortOnCruiseCorrespondsToItineraryPanel(1));
+
     }
 
 }
