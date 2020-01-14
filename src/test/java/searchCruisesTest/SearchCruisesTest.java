@@ -5,23 +5,15 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import pages.CruiseItem;
+import utils.CruiseCriteria;
 
 import java.util.function.Predicate;
 
+import static utils.CruiseCriteria.lessOrEqual8Nights;
+import static utils.CruiseCriteria.moreOrEqual6Nights;
+
 public class SearchCruisesTest extends AbstractTest {
 
-    public static Predicate<CruiseItem> moreOrEqual6Nights = new Predicate<CruiseItem>() {
-        @Override
-        public boolean test(CruiseItem t) {
-            return t.getNumberOfNights() >= 6;
-        }
-    };
-    public static Predicate<CruiseItem> lessOrEqual8Nights = new Predicate<CruiseItem>() {
-        @Override
-        public boolean test(CruiseItem t) {
-            return t.getNumberOfNights() <= 8;
-        }
-    };
 
     @Test
     public void searchCruisesByNumberOfNights() {
@@ -30,10 +22,8 @@ public class SearchCruisesTest extends AbstractTest {
 
         cruisesPage.clickOn6_8NightsFilter();
 
-        //System.out.println("cruisesPage.getCruiseItemList() + " + cruisesPage.getCruiseItemList());
-
-        Assert.assertTrue(cruisesPage.checkCruiseItemsOnAllPages(
-                moreOrEqual6Nights.and(lessOrEqual8Nights)
+        Assert.assertTrue(cruisesPage.checkCruiseItemsOnAllPages(moreOrEqual6Nights
+                        .and(lessOrEqual8Nights)
                 , "Cruise number of nights are between 6 and 8"));
     }
 
